@@ -7,3 +7,5 @@ adc_qsys/*
 *.pdf
 *.rpt
 output_files/*
+work/*
+*.wlf

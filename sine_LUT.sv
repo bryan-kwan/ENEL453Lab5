@@ -1,17 +1,19 @@
 module sine_LUT #(parameter WIDTH=8, // Bit width of ROM data and output
-                            ROM_WIDTH=32 // Bit width of the table (ie. log2 of the ROM file size)
+                            PHASE_WIDTH=32
                 )
-    (input logic clk,
-     input logic [ROM_WIDTH-1:0] phase,
-     output logic [WIDTH-1:0] sine
+    (input logic    clk,
+                    enable,
+     input logic [PHASE_WIDTH-1:0] phase,
+     output logic signed [WIDTH-1:0] sine 
     );
 
-  logic [WIDTH-1:0] my_rom[2**ROM_WIDTH-1:0]; // i.e. [data_width-1:0] my_rom[2**addr_width-1:0];
+  logic [WIDTH-1:0] my_rom[2**WIDTH-1:0]; // i.e. [data_width-1:0] my_rom[2**addr_width-1:0];
   
-  initial begin // normally we don't use initial in RTL code, this is an exception
-    $readmemh("sine_rom.txt",my_rom); // reads hexadecimal data from v2d_rom and places into my_rom
+  initial begin 
+    $readmemh("sine_rom.txt",my_rom);
   end
     
   always @(posedge clk)
-    sine = my_rom[phase];
+    if(enable)
+        sine = my_rom[phase[PHASE_WIDTH-1:PHASE_WIDTH-WIDTH]]; // Takes the top WIDTH bits as the ROM address
 endmodule
