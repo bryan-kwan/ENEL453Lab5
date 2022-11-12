@@ -12,23 +12,25 @@ MIN_DIST = 0
 MAX_DIST = 2000
 DIST_TO_FREQ_SCALE = (HIGH_FREQ-LOW_FREQ) / (MAX_DIST-MIN_DIST)
 PHASE_WIDTH=32
+MAX_COUNT=128 # Max count value of PWM_DAC which divides the final frequency by MAX_COUNT
 width=13 # Table width
 size=2**width # Table size
+
 
 with open("dist2freq_step_rom.txt", "w") as f:
     for i in range(size):
         if(i>MIN_DIST and i<MAX_DIST): # Inside range
-            frequency=LOW_FREQ+i*int(DIST_TO_FREQ_SCALE) # Target frequency
+            frequency=LOW_FREQ+i*DIST_TO_FREQ_SCALE # Target frequency of final pwm signal
             f.write("{:08X}\n".format(tohex(round(
-                2**PHASE_WIDTH*frequency/CLK_FREQ
+                2**PHASE_WIDTH*frequency*MAX_COUNT/CLK_FREQ
                 ),PHASE_WIDTH)))
         elif (i<=MIN_DIST): # Too close to sensor; stay at LOW_FREQ
             frequency=LOW_FREQ
             f.write("{:08X}\n".format(tohex(round(
-                2**PHASE_WIDTH*frequency/CLK_FREQ
+                2**PHASE_WIDTH*frequency*MAX_COUNT/CLK_FREQ
                 ),PHASE_WIDTH)))
-        elif (i>=MAX_DIST): # Too far from sensor; cap at HIGH_FREQ
-            frequency=HIGH_FREQ
+        elif (i>=MAX_DIST): # Too far from sensor; set to BASE_FREQ
+            frequency=BASE_FREQ
             f.write("{:08X}\n".format(tohex(round(
-                2**PHASE_WIDTH*frequency/CLK_FREQ
+                2**PHASE_WIDTH*frequency*MAX_COUNT/CLK_FREQ
                 ),PHASE_WIDTH)))
