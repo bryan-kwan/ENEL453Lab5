@@ -18,7 +18,7 @@ module sine_LUT_tb();
 		//Apply stimulus
         enable=1;
         for(int i = 0; i<256;i++) begin
-            phase[31:24] = i; #(CLOCK_PERIOD);
+            phase[31:25] = i; #(CLOCK_PERIOD);
         end
 		$display("\n===  Testbench ended  ===");
 		$stop;

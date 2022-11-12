@@ -2,19 +2,18 @@
 
 // Specs used in frequency step LUT (use the Python script to generate ROM file)
     // CLK_FREQ=50 000 000,
+    // CARRIER_FREQ = 50 000 000 / 128,
     // BASE_FREQ = 300 000,
     // LOW_FREQ =  290 000,
     // HIGH_FREQ = 310 000, 
     // MIN_DIST = 0,
     // MAX_DIST = 2000,
-    // MAX_COUNT = 128,
-    // f_sine = MAX_COUNT * f_target (MAX_COUNT gets divided out later by the PWM_DAC)
 
 module FM_DAC
  #(int                      WIDTH = 13, // Bit width of distance
                             SINE_WIDTH=8, // Bit width of sine LUT data
                             PHASE_WIDTH=32, // Bit width of phase
-                            COUNT_WIDTH=7 // Count of 128 so f_PWM = f_sine / 128
+                            COUNT_WIDTH=7
                             )
   (input  logic             reset_n,
                             clk,
@@ -24,28 +23,29 @@ module FM_DAC
     logic [SINE_WIDTH-1:0]  sine_fm;
     logic [COUNT_WIDTH-1:0] count_value;
     logic [PHASE_WIDTH-1:0] phase, freq_step;
+    logic zero; // PWM_DAC raises zero high at the start of its counting sequence
     
-    assign count_value=-1; // Maximum value
+    assign count_value = 127; // f_carrier = CLK_FREQ / (count_value+1) = ~390 kHz
 
     // Lower level modules
     dist2freq_step_LUT dist2freq_step_LUT_ins(.clk(clk),.enable(enable),.address(distance),.freq_step(freq_step));
-    sine_LUT sine_LUT_ins(.clk(clk),.enable(enable),
-        .phase(phase), // LUT uses the most significant 8 bits of phase
+    sine_LUT sine_LUT_ins(.clk(clk),
+        .enable(zero), // Perform lookup at the start of every PWM_DAC cycle
+        .phase(phase), // LUT uses the 7 most significant bits of phase
         .sine(sine_fm));
 
-    PWM_DAC #(.width(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
-        .duty_cycle(sine_fm[SINE_WIDTH-1:SINE_WIDTH-COUNT_WIDTH]), // Truncate the last bits to match width with count_value
-        .count_value(count_value),.pwm_out(sine_pwm_out));
+    PWM_DAC #(.WIDTH(SINE_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
+        .duty_cycle(sine_fm),
+        .count_value(count_value),.pwm_out(sine_pwm_out),.zero(zero));
 
     always_ff @(posedge clk, negedge reset_n)
         if(!reset_n) begin 
-            // sine_fm<='0;
-            // freq_step<='0;
             phase<='0;
         end
         else if (enable) begin
             // Phase accumulator
-            phase <= phase + freq_step;
+            if(zero) // Increment phase every cycle of PWM_DAC
+                phase <= phase + freq_step;
         end
 
 endmodule

@@ -24,7 +24,7 @@ module FM_DAC_tb();
         for(int i = 0; i<1.1*MAX_DIST; i+=500) begin
             $display("Applying distance = %d", i);
             distance = i; #(CLOCK_PERIOD);
-            reset_n = 1; #(max_cycles*CLOCK_PERIOD);
+            reset_n = 1; #(max_cycles*max_cycles*CLOCK_PERIOD);
             reset_n = 0; #(CLOCK_PERIOD);
         end
 

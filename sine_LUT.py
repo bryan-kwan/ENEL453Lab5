@@ -3,10 +3,13 @@ import math
 def tohex(val, nbits):
     return (val + (1 << nbits)) % (1 << nbits)
     
-width=8
-width_hex=str(math.floor(width/4))
-size=2**width
+width=7 # Maximum width of sine_value = maximum width of PWM_DAC count
+width_hex=str(math.ceil(width/4))
+size=128
 
 with open("sine_rom.txt", "w") as f:
     for i in range(size):
-        f.write(("{:0"+width_hex+"X} \n").format(tohex(round(2**(width) * math.sin(i*2*math.pi/size)),width)))
+        sine_value=round(2**(width) * (math.sin(i*2*math.pi/size)+1)/2)
+        if(sine_value>=2**width): # If overflow, cap at max value
+            sine_value=2**width-1
+        f.write(("{:0"+width_hex+"X} \n").format(tohex(sine_value,width)))
