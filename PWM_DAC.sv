@@ -2,11 +2,11 @@
 // Actual duty cycle is duty_cycle / count_value * 100%
 // unless duty_cycle > count_value in which case duty cycle is 100%
 module PWM_DAC
- #(int                      WIDTH = 9, COUNT_WIDTH=9)
+ #(int                      width = 9, COUNT_WIDTH=9)
   (input  logic             reset_n,
                             clk,
                             enable,
-   input  logic [WIDTH-1:0] duty_cycle, // Number of clock cycles pwm_out is 1
+   input  logic [width-1:0] duty_cycle, // Number of clock cycles pwm_out is 1
    input  logic [COUNT_WIDTH-1:0] count_value, // Maximum count value before resetting to 0
    output logic             pwm_out, 
                             zero); // zero signal goes high when count = 0

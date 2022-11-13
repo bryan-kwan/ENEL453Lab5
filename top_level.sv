@@ -9,7 +9,10 @@ module top_level
   input  logic button,
   output logic [9:0] LEDR,
   output logic [7:0] HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,
-  output logic buzzer);
+  output logic buzzer,      // ARDUINO_IO[2]
+               sine_am_pwm, // ARDUINO_IO[3]
+               sine_fm_pwm  // ARDUINO_IO[4]
+  );
   
   logic [3:0]  Num_Hex0, Num_Hex1, Num_Hex2, Num_Hex3, Num_Hex4, Num_Hex5;   
   logic [5:0]  DP_in, Blank;
@@ -35,9 +38,14 @@ module top_level
   
   // instantiate lower level modules
 
+  AM_DAC AM_DAC_ins(.reset_n(reset_n), .clk(clk), .enable(write_enable), .distance(distance), .sine_pwm_out(sine_am_pwm));
 
-  distance2frequency_converter #(.BASE_PERIOD(100),.DUTY_CYCLE(50),.CLOCK_DIVIDE_LOW_FREQ(2040), .CLOCK_DIVIDE_HIGH_FREQ(40)) // ~245Hz to 12500 Hz
+  FM_DAC FM_DAC_ins(.reset_n(reset_n), .clk(clk), .enable(write_enable), .distance(distance), .sine_pwm_out(sine_fm_pwm));
+
+  distance2frequency_converter #(.BASE_PERIOD(100),.DUTY_CYCLE(50),.CLOCK_DIVIDE_LOW_FREQ(2040),
+    .CLOCK_DIVIDE_HIGH_FREQ(40)) // ~245Hz to 12500 Hz
     distance2frequency_converter_buzzer_ins(.distance(distance),.reset_n(reset_n),.clk(clk),.enable(write_enable),.pwm_led(pwm_buzzer));
+
   distance2frequency_converter distance2frequency_converter_flash_ins(.distance(distance),.reset_n(reset_n),.clk(clk),.enable(write_enable),.pwm_led(pwm_flash));
 
   distance2duty_cycle_converter distance2duty_cycle_converter_LEDR_ins(.distance(distance),.reset_n(reset_n),.clk(clk),.enable(LEDR_enable),.pwm_led(pwm_led));

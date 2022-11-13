@@ -36,7 +36,7 @@ module AM_DAC
         .phase(phase), // LUT uses the 7 most significant bits of phase
         .sine(sine_value));
 
-    PWM_DAC #(.WIDTH(RESULT_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
+    PWM_DAC #(.width(RESULT_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
         .duty_cycle(sine_am),
         .count_value(count_value),.pwm_out(sine_pwm_out),.zero(zero));
 

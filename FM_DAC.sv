@@ -34,7 +34,7 @@ module FM_DAC
         .phase(phase), // LUT uses the 7 most significant bits of phase
         .sine(sine_fm));
 
-    PWM_DAC #(.WIDTH(SINE_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
+    PWM_DAC #(.width(SINE_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
         .duty_cycle(sine_fm),
         .count_value(count_value),.pwm_out(sine_pwm_out),.zero(zero));
 
