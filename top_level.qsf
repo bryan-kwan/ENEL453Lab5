@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M50DAF484C6GES
-set_global_assignment -name TOP_LEVEL_ENTITY top_level
+set_global_assignment -name TOP_LEVEL_ENTITY FM_DAC
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "00:51:01  APRIL 23, 2022"
 set_global_assignment -name LAST_QUARTUS_VERSION "21.1.1 Lite Edition"
@@ -225,6 +225,58 @@ set_global_assignment -name EDA_TEST_BENCH_FILE MUX2TO1_tb.sv -section_id MUX2TO
 set_global_assignment -name EDA_TEST_BENCH_FILE top_level_tb.sv -section_id top_level_tb
 set_global_assignment -name EDA_TEST_BENCH_FILE binary_bcd_compare_tb.sv -section_id binary_bcd_compare_tb
 set_global_assignment -name EDA_TEST_BENCH_FILE tb_debounce.sv -section_id tb_debounce
+set_global_assignment -name SYSTEMVERILOG_FILE sine_LUT_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE LFSR.sv
+set_global_assignment -name SYSTEMVERILOG_FILE FM_DAC_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE dist2freq_step_LUT_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE FM_DAC.sv
+set_global_assignment -name SYSTEMVERILOG_FILE dist2freq_step_LUT.sv
+set_global_assignment -name TEXT_FILE sine_rom.txt
+set_global_assignment -name SYSTEMVERILOG_FILE sine_LUT.sv
+set_global_assignment -name SYSTEMVERILOG_FILE digit_manager_wrapper.sv
+set_global_assignment -name SYSTEMVERILOG_FILE distance2frequency_converter_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE distance2frequency_converter.sv
+set_global_assignment -name SYSTEMVERILOG_FILE distance2duty_cycle_converter_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE distance2duty_cycle_converter.sv
+set_global_assignment -name TEXT_FILE v2d_rom.txt
+set_global_assignment -name SYSTEMVERILOG_FILE MUX4TO1_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE MUX4TO1.sv
+set_global_assignment -name QIP_FILE adc_qsys/synthesis/adc_qsys.qip
+set_global_assignment -name SYSTEMVERILOG_FILE voltage2distance_array2.sv
+set_global_assignment -name SYSTEMVERILOG_FILE register_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE register.sv
+set_global_assignment -name SYSTEMVERILOG_FILE averager256.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ADC_Simulation.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ADC_Data.sv
+set_global_assignment -name VERILOG_FILE ADC_Conversion.v
+set_global_assignment -name SOURCE_FILE top_level_assignment_defaults.qdf
+set_global_assignment -name SYSTEMVERILOG_FILE tb_debounce.sv
+set_global_assignment -name SYSTEMVERILOG_FILE debounce.sv
+set_global_assignment -name SYSTEMVERILOG_FILE binary_bcd.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SevenSegment.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SevenSegment_decoder.sv
+set_global_assignment -name SYSTEMVERILOG_FILE top_level.sv
+set_global_assignment -name SDC_FILE DE10_LITE.sdc
+set_global_assignment -name SOURCE_FILE DE10_LITE.qsf
+set_global_assignment -name SDC_FILE top_level.sdc
+set_global_assignment -name SOURCE_FILE top_level.qsf
+set_global_assignment -name SYSTEMVERILOG_FILE top_level_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE synchronizer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE synchronizer_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE digit_manager.sv
+set_global_assignment -name SYSTEMVERILOG_FILE digit_manager_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE averager.sv
+set_global_assignment -name SYSTEMVERILOG_FILE averager_tb.sv
+set_global_assignment -name QIP_FILE ../ENEL453_Lab3/adc_qsys/synthesis/adc_qsys.qip
+set_global_assignment -name SYSTEMVERILOG_FILE PWM_DAC.sv
+set_global_assignment -name SYSTEMVERILOG_FILE MUX2TO1_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE MUX2TO1.sv
+set_global_assignment -name SYSTEMVERILOG_FILE downcounter.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ADC_Simulation_tb.sv
+set_global_assignment -name SOURCE_FILE db/top_level.cmp.rdb
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_CLK_10
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[10]
@@ -374,52 +426,4 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to VGA_VS
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to reset_n
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to button
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
-set_global_assignment -name SYSTEMVERILOG_FILE FM_DAC.sv
-set_global_assignment -name SYSTEMVERILOG_FILE dist2freq_step_LUT.sv
-set_global_assignment -name TEXT_FILE sine_rom.txt
-set_global_assignment -name SYSTEMVERILOG_FILE sine_LUT.sv
-set_global_assignment -name SYSTEMVERILOG_FILE digit_manager_wrapper.sv
-set_global_assignment -name SYSTEMVERILOG_FILE distance2frequency_converter_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE distance2frequency_converter.sv
-set_global_assignment -name SYSTEMVERILOG_FILE distance2duty_cycle_converter_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE distance2duty_cycle_converter.sv
-set_global_assignment -name TEXT_FILE v2d_rom.txt
-set_global_assignment -name SYSTEMVERILOG_FILE MUX4TO1_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE MUX4TO1.sv
-set_global_assignment -name QIP_FILE adc_qsys/synthesis/adc_qsys.qip
-set_global_assignment -name SYSTEMVERILOG_FILE voltage2distance_array2.sv
-set_global_assignment -name SYSTEMVERILOG_FILE register_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE register.sv
-set_global_assignment -name SYSTEMVERILOG_FILE averager256.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ADC_Simulation.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ADC_Data.sv
-set_global_assignment -name VERILOG_FILE ADC_Conversion.v
-set_global_assignment -name SOURCE_FILE top_level_assignment_defaults.qdf
-set_global_assignment -name SYSTEMVERILOG_FILE tb_debounce.sv
-set_global_assignment -name SYSTEMVERILOG_FILE debounce.sv
-set_global_assignment -name SYSTEMVERILOG_FILE binary_bcd.sv
-set_global_assignment -name SYSTEMVERILOG_FILE SevenSegment.sv
-set_global_assignment -name SYSTEMVERILOG_FILE SevenSegment_decoder.sv
-set_global_assignment -name SYSTEMVERILOG_FILE top_level.sv
-set_global_assignment -name SDC_FILE DE10_LITE.sdc
-set_global_assignment -name SOURCE_FILE DE10_LITE.qsf
-set_global_assignment -name SDC_FILE top_level.sdc
-set_global_assignment -name SOURCE_FILE top_level.qsf
-set_global_assignment -name SYSTEMVERILOG_FILE top_level_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE synchronizer.sv
-set_global_assignment -name SYSTEMVERILOG_FILE synchronizer_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE digit_manager.sv
-set_global_assignment -name SYSTEMVERILOG_FILE digit_manager_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE averager.sv
-set_global_assignment -name SYSTEMVERILOG_FILE averager_tb.sv
-set_global_assignment -name QIP_FILE ../ENEL453_Lab3/adc_qsys/synthesis/adc_qsys.qip
-set_global_assignment -name SYSTEMVERILOG_FILE PWM_DAC.sv
-set_global_assignment -name SYSTEMVERILOG_FILE MUX2TO1_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE MUX2TO1.sv
-set_global_assignment -name SYSTEMVERILOG_FILE downcounter.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ADC_Simulation_tb.sv
-set_global_assignment -name SOURCE_FILE db/top_level.cmp.rdb

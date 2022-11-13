@@ -7,7 +7,7 @@ module PWM_DAC
                             clk,
                             enable,
    input  logic [WIDTH-1:0] duty_cycle, // Number of clock cycles pwm_out is 1
-                [COUNT_WIDTH-1:0] count_value, // Maximum count value before resetting to 0
+   input  logic [COUNT_WIDTH-1:0] count_value, // Maximum count value before resetting to 0
    output logic             pwm_out, 
                             zero); // zero signal goes high when count = 0
                                       
