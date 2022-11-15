@@ -9,7 +9,8 @@ module AM_DAC
  #(parameter                WIDTH = 13, // Bit width of distance
                             SINE_WIDTH=8, // Bit width of sine LUT data
                             PHASE_WIDTH=32, // Bit width of phase
-                            COUNT_WIDTH=7,
+                            PHASE_INTEGER_WIDTH=7,
+                            COUNT_WIDTH=8,
                             LOG2_MAX_DIST=11, // Max distance of 2048
                             MAX_DIST=2**LOG2_MAX_DIST,
                             MULT_WIDTH=WIDTH+SINE_WIDTH,
@@ -27,13 +28,13 @@ module AM_DAC
     logic zero; // PWM_DAC raises zero high at the start of its counting sequence
     logic [MULT_WIDTH-1:0] mult; // mult = distance * sine_value
     
-    assign count_value = 127; // f_carrier = CLK_FREQ / (count_value+1) = ~390 kHz
-    assign freq_step = 32'h0189374C; // 300 kHz
+    assign count_value = 2**COUNT_WIDTH-1;
+    assign freq_step = 32'hC49BA5E3; // 300 kHz
 
     // Lower level modules
     sine_LUT sine_LUT_ins(.clk(clk),
-        .enable(zero), // Perform lookup at the start of every PWM_DAC cycle
-        .phase(phase), // LUT uses the 7 most significant bits of phase
+        .enable(enable), 
+        .phase(phase), // LUT uses the PHASE_INTEGER_WIDTH most significant bits of phase
         .sine(sine_value));
 
     PWM_DAC #(.width(RESULT_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),

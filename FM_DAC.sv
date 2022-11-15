@@ -2,8 +2,8 @@
 
 // Specs used in frequency step LUT (use the Python script to generate ROM file)
     // CLK_FREQ=50 000 000,
-    // CARRIER_FREQ = 50 000 000 / 128,
-    // BASE_FREQ = 300 000,
+    // BASE_FREQ = CLK_FREQ / (N_SINE_VALUES*PWM_COUNT)
+    // CARRIER_FREQ = 300 000,
     // LOW_FREQ =  290 000,
     // HIGH_FREQ = 310 000, 
     // MIN_DIST = 0,
@@ -13,7 +13,8 @@ module FM_DAC
  #(int                      WIDTH = 13, // Bit width of distance
                             SINE_WIDTH=8, // Bit width of sine LUT data
                             PHASE_WIDTH=32, // Bit width of phase
-                            COUNT_WIDTH=7
+                            PHASE_INTEGER_WIDTH=7, // Number of bits designated to an integer table index
+                            COUNT_WIDTH=8
                             )
   (input  logic             reset_n,
                             clk,
@@ -25,13 +26,13 @@ module FM_DAC
     logic [PHASE_WIDTH-1:0] phase, freq_step;
     logic zero; // PWM_DAC raises zero high at the start of its counting sequence
     
-    assign count_value = 127; // f_carrier = CLK_FREQ / (count_value+1) = ~390 kHz
+    assign count_value = 2**COUNT_WIDTH-1; // f_base = ~391 kHz
 
     // Lower level modules
     dist2freq_step_LUT dist2freq_step_LUT_ins(.clk(clk),.enable(enable),.address(distance),.freq_step(freq_step));
     sine_LUT sine_LUT_ins(.clk(clk),
-        .enable(zero), // Perform lookup at the start of every PWM_DAC cycle
-        .phase(phase), // LUT uses the 7 most significant bits of phase
+        .enable(enable),
+        .phase(phase), // LUT uses the PHASE_INTEGER_WIDTH most significant bits of phase
         .sine(sine_fm));
 
     PWM_DAC #(.width(SINE_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
