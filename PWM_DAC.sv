@@ -1,8 +1,7 @@
+//
 
-// Actual duty cycle is duty_cycle / count_value * 100%
-// unless duty_cycle > count_value in which case duty cycle is 100%
 module PWM_DAC
- #(int                      width = 9, COUNT_WIDTH=9)
+ #(int                      width = 13, COUNT_WIDTH=13)
   (input  logic             reset_n,
                             clk,
                             enable,

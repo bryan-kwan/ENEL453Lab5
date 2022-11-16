@@ -9,7 +9,7 @@ module AM_DAC
  #(parameter                WIDTH = 13, // Bit width of distance
                             SINE_WIDTH=8, // Bit width of sine LUT data
                             PHASE_WIDTH=32, // Bit width of phase
-                            PHASE_INTEGER_WIDTH=7,
+                            PHASE_INTEGER_WIDTH=12,
                             COUNT_WIDTH=8,
                             LOG2_MAX_DIST=11, // Max distance of 2048
                             MAX_DIST=2**LOG2_MAX_DIST,

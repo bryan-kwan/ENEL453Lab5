@@ -4,7 +4,7 @@ def tohex(val, nbits):
     return (val + (1 << nbits)) % (1 << nbits)
     
 width=7 # Maximum width of sine_value = maximum width of PWM_DAC count
-PHASE_INTEGER_WIDTH=7 # Number of phase bits interpreted as an integer
+PHASE_INTEGER_WIDTH=12 # Number of phase bits interpreted as an integer
 width_hex=str(math.ceil(width/4))
 size=2**PHASE_INTEGER_WIDTH
 

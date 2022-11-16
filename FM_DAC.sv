@@ -13,7 +13,7 @@ module FM_DAC
  #(int                      WIDTH = 13, // Bit width of distance
                             SINE_WIDTH=8, // Bit width of sine LUT data
                             PHASE_WIDTH=32, // Bit width of phase
-                            PHASE_INTEGER_WIDTH=7, // Number of bits designated to an integer table index
+                            PHASE_INTEGER_WIDTH=12, // Number of bits designated to an integer table index
                             COUNT_WIDTH=8
                             )
   (input  logic             reset_n,

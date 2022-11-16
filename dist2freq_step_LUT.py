@@ -7,7 +7,7 @@ def tohex(val, nbits):
 CLK_FREQ=50000000
 SINE_VALUE_BITS = 7
 PWM_DAC_MAX_COUNT = 2**SINE_VALUE_BITS
-SINE_LUT_BITS = 7
+SINE_LUT_BITS = 12
 N_SINE_VALUES = 2**SINE_LUT_BITS
 # frequency of sine_LUT wave with phase increment of 1
 BASE_FREQ = CLK_FREQ / (PWM_DAC_MAX_COUNT * N_SINE_VALUES)
@@ -18,7 +18,7 @@ MIN_DIST = 0
 MAX_DIST = 2000
 DIST_TO_FREQ_SCALE = (HIGH_FREQ-LOW_FREQ) / (MAX_DIST-MIN_DIST)
 PHASE_WIDTH=32
-PHASE_INTEGER_WIDTH = 7 # Number of bits taken as the integer table index
+PHASE_INTEGER_WIDTH = 12 # Number of bits taken as the integer table index
 width=13 # Table width
 size=2**width # Table size
 

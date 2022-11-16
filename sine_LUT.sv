@@ -1,6 +1,6 @@
 module sine_LUT #(parameter WIDTH=8, // Bit width of ROM data and output
                             PHASE_WIDTH=32,
-                            ADDRESS_WIDTH=7
+                            ADDRESS_WIDTH=12
                 )
     (input logic    clk,
                     enable,
