@@ -9,11 +9,11 @@ module top_level
   input  logic button,
   output logic [9:0] LEDR,
   output logic [7:0] HEX0,HEX1,HEX2,HEX3,HEX4,HEX5,
-  output logic buzzer,      // ARDUINO_IO[2]
-               sine_am_pwm, // ARDUINO_IO[3]
-               sine_fm_pwm  // ARDUINO_IO[4]
+  output logic [15:0] ARDUINO_IO
   );
-  
+  logic sine_am_pwm, // ARDUINO_IO[0]
+        sine_fm_pwm;  // ARDUINO_IO[1]
+  logic [6:0] sine_am_out, sine_fm_out;
   logic [3:0]  Num_Hex0, Num_Hex1, Num_Hex2, Num_Hex3, Num_Hex4, Num_Hex5;   
   logic [5:0]  DP_in, Blank;
   logic [15:0] bcd, mux_out, reg_out, out1;
@@ -34,13 +34,15 @@ module top_level
   assign Num_Hex5 = 4'b0000;                                             
   assign LEDR[9:0]= {(10){pwm_led}};
   assign LEDR_enable = 1; // LEDR always on
-  assign buzzer=pwm_buzzer;
-  
+  assign ARDUINO_IO[0] = sine_am_pwm;
+  assign ARDUINO_IO[1] = sine_fm_pwm;
+  assign ARDUINO_IO[8:2] = sine_am_out[6:0]; // 7 bit sine_am value
+  assign ARDUINO_IO[15:9] = sine_fm_out[6:0]; // 7 bit sine_fm value
   // instantiate lower level modules
 
-  AM_DAC AM_DAC_ins(.reset_n(reset_n), .clk(clk), .enable(write_enable), .distance(distance), .sine_pwm_out(sine_am_pwm));
+  AM_DAC AM_DAC_ins(.reset_n(reset_n), .clk(clk), .enable(write_enable), .distance(distance), .sine_pwm_out(sine_am_pwm), .sine_am_out(sine_am_out));
 
-  FM_DAC FM_DAC_ins(.reset_n(reset_n), .clk(clk), .enable(write_enable), .distance(distance), .sine_pwm_out(sine_fm_pwm));
+  FM_DAC FM_DAC_ins(.reset_n(reset_n), .clk(clk), .enable(write_enable), .distance(distance), .sine_pwm_out(sine_fm_pwm), .sine_fm_out(sine_fm_out));
 
   distance2frequency_converter #(.BASE_PERIOD(100),.DUTY_CYCLE(50),.CLOCK_DIVIDE_LOW_FREQ(2040),
     .CLOCK_DIVIDE_HIGH_FREQ(40)) // ~245Hz to 12500 Hz

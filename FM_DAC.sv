@@ -20,24 +20,28 @@ module FM_DAC
                             clk,
                             enable,
    input  logic [WIDTH-1:0] distance,
-   output logic sine_pwm_out);
+   output logic sine_pwm_out,
+   output logic [SINE_WIDTH-1:0] sine_fm_out);
     logic [SINE_WIDTH-1:0]  sine_fm;
     logic [COUNT_WIDTH-1:0] count_value;
     logic [PHASE_WIDTH-1:0] phase, freq_step;
     logic zero; // PWM_DAC raises zero high at the start of its counting sequence
     
     assign count_value = 2**COUNT_WIDTH-1; // f_base = ~391 kHz
-
+    assign sine_fm_out = sine_fm;
+    
     // Lower level modules
     dist2freq_step_LUT dist2freq_step_LUT_ins(.clk(clk),.enable(enable),.address(distance),.freq_step(freq_step));
     sine_LUT sine_LUT_ins(.clk(clk),
         .enable(enable),
         .phase(phase), // LUT uses the PHASE_INTEGER_WIDTH most significant bits of phase
         .sine(sine_fm));
-
-    PWM_DAC #(.width(SINE_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
-        .duty_cycle(sine_fm),
-        .count_value(count_value),.pwm_out(sine_pwm_out),.zero(zero));
+        
+    // Uncomment for PWM --------------------------------
+    // PWM_DAC #(.width(SINE_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
+    //     .duty_cycle(sine_fm),
+    //     .count_value(count_value),.pwm_out(sine_pwm_out),.zero(zero));
+    // -------------------------------
 
     always_ff @(posedge clk, negedge reset_n)
         if(!reset_n) begin 
@@ -45,8 +49,12 @@ module FM_DAC
         end
         else if (enable) begin
             // Phase accumulator
-            if(zero) // Increment phase every cycle of PWM_DAC
-                phase <= phase + freq_step;
+            // Uncomment for PWM --------------------------------
+            // if(zero) // Increment phase every cycle of PWM_DAC
+            //     phase <= phase + freq_step;
+            // --------------------------------
+
+            phase <= phase + freq_step;
         end
 
 endmodule
