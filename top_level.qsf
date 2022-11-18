@@ -179,9 +179,9 @@ set_location_assignment PIN_V11 -to GSENSOR_SDI
 set_location_assignment PIN_V12 -to GSENSOR_SDO
 set_location_assignment PIN_AB5 -to ARDUINO_IO[0]
 set_location_assignment PIN_AB6 -to ARDUINO_IO[1]
-set_location_assignment PIN_AB7 -to buzzer
-set_location_assignment PIN_AB8 -to sine_am_pwm
-set_location_assignment PIN_AB9 -to sine_fm_pwm
+set_location_assignment PIN_AB7 -to ARDUINO_IO[2]
+set_location_assignment PIN_AB8 -to ARDUINO_IO[3]
+set_location_assignment PIN_AB9 -to ARDUINO_IO[4]
 set_location_assignment PIN_Y10 -to ARDUINO_IO[5]
 set_location_assignment PIN_AA11 -to ARDUINO_IO[6]
 set_location_assignment PIN_AA12 -to ARDUINO_IO[7]
@@ -198,7 +198,8 @@ set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name EDA_DESIGN_ENTRY_SYNTHESIS_TOOL "<None>"
+set_global_assignment -name EDA_DESIGN_ENTRY_SYNTHESIS_TOOL "Precision Synthesis"
+set_global_assignment -name EDA_LMF_FILE mentor.lmf -section_id eda_design_synthesis
 set_global_assignment -name EDA_INPUT_DATA_FORMAT VQM -section_id eda_design_synthesis
 set_global_assignment -name EDA_SIMULATION_TOOL "Questa Intel FPGA (SystemVerilog)"
 set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
@@ -234,9 +235,9 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[13]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[14]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[15]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to buzzer
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sine_am_pwm
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to sine_fm_pwm
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[4]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[5]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARDUINO_IO[7]
@@ -377,16 +378,6 @@ set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to button
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name SYSTEMVERILOG_FILE AM_DAC_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE AM_DAC.sv
-set_global_assignment -name SYSTEMVERILOG_FILE sine_LUT_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE LFSR.sv
-set_global_assignment -name SYSTEMVERILOG_FILE FM_DAC_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE dist2freq_step_LUT_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE FM_DAC.sv
-set_global_assignment -name SYSTEMVERILOG_FILE dist2freq_step_LUT.sv
-set_global_assignment -name TEXT_FILE sine_rom.txt
-set_global_assignment -name SYSTEMVERILOG_FILE sine_LUT.sv
 set_global_assignment -name SYSTEMVERILOG_FILE digit_manager_wrapper.sv
 set_global_assignment -name SYSTEMVERILOG_FILE distance2frequency_converter_tb.sv
 set_global_assignment -name SYSTEMVERILOG_FILE distance2frequency_converter.sv
