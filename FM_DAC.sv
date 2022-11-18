@@ -2,10 +2,10 @@
 
 // Specs used in frequency step LUT (use the Python script to generate ROM file)
     // CLK_FREQ=50 000 000,
-    // BASE_FREQ = CLK_FREQ / (N_SINE_VALUES*PWM_COUNT)
-    // CARRIER_FREQ = 300 000,
-    // LOW_FREQ =  290 000,
-    // HIGH_FREQ = 310 000, 
+    // BASE_FREQ = CLK_FREQ / (N_SINE_VALUES*PWM_COUNT) // PWM_COUNT=1 for R-2R ladder
+    // CARRIER_FREQ = 10 MHz,
+    // LOW_FREQ =  9 MHz,
+    // HIGH_FREQ = 11 MHz, 
     // MIN_DIST = 0,
     // MAX_DIST = 2000,
 
@@ -20,14 +20,15 @@ module FM_DAC
                             clk,
                             enable,
    input  logic [WIDTH-1:0] distance,
-   output logic sine_pwm_out,
+   //output logic sine_pwm_out, // PWM signal if desired; uncomment 3 sections below
    output logic [SINE_WIDTH-1:0] sine_fm_out);
     logic [SINE_WIDTH-1:0]  sine_fm;
-    logic [COUNT_WIDTH-1:0] count_value;
     logic [PHASE_WIDTH-1:0] phase, freq_step;
-    logic zero; // PWM_DAC raises zero high at the start of its counting sequence
-    
-    assign count_value = 2**COUNT_WIDTH-1; // f_base = ~391 kHz
+    // Uncomment for PWM --------------------------------
+    //logic [COUNT_WIDTH-1:0] count_value;
+    //logic zero; // PWM_DAC raises zero high at the start of its counting sequence
+    //assign count_value = 2**COUNT_WIDTH-1; // f_base = ~391 kHz
+    // --------------------------------
     assign sine_fm_out = sine_fm;
     
     // Lower level modules
@@ -49,7 +50,8 @@ module FM_DAC
         end
         else if (enable) begin
             // Phase accumulator
-            // Uncomment for PWM --------------------------------
+
+            // Uncomment for PWM (comment out below phase increment) --------------------------------
             // if(zero) // Increment phase every cycle of PWM_DAC
             //     phase <= phase + freq_step;
             // --------------------------------

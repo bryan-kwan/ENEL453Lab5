@@ -9,9 +9,12 @@ module FM_DAC_tb();
     logic clk = 1, reset_n = 1, enable=1;
     logic [WIDTH-1:0] distance;
     logic sine_pwm_out;
+    logic [6:0] sine_fm_out;
     int max_cycles = 128; // MAX_COUNT
     // UUT
-    FM_DAC UUT(.distance(distance),.reset_n(reset_n),.clk(clk),.enable(enable),.sine_pwm_out(sine_pwm_out));
+    FM_DAC UUT(.distance(distance),.reset_n(reset_n),.clk(clk),.enable(enable),
+    //.sine_pwm_out(sine_pwm_out)
+    .sine_fm_out(sine_fm_out));
 
     always #(CLOCK_PERIOD/2) clk=~clk;
     // Stimulus
