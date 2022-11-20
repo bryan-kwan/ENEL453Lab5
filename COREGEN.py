@@ -1,7 +1,7 @@
 from math import *
 PW = 12
 NSTAGES = 11
-OW = 7
+OW = 32
 angle = NSTAGES * [0.0]
 
 for k in range(NSTAGES):

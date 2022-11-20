@@ -1,9 +1,9 @@
 `timescale 1ns/1ps
 module CORDIC_tb();
     parameter   PW=12, // Phase width
-                IW=6, // Input width (ie. i_xval, i_yval)
-                OW=7, // Output width
-                NSTAGES=31;
+                IW=31, // Input width (ie. i_xval, i_yval)
+                OW=32, // Output width
+                NSTAGES=11;
     parameter CLOCK_PERIOD = 20;
     
     logic clk = 1, enable=1;
@@ -20,7 +20,7 @@ module CORDIC_tb();
     initial begin
         $display("Start of testbench");
         $display("Testing sine generation, time=%t ps",$time);
-        i_xval=31; i_yval=0; // Rotating (1,0), o_yval gives the sine function
+        i_xval=32'h3fffffff; i_yval=0; // Rotating (1,0), o_yval gives the sine function
         for(int i = 0; i<(2**PW); i+=1) begin
             $display("Applying phase = %h", i);
             i_phase = i; #((NSTAGES+4)*CLOCK_PERIOD);

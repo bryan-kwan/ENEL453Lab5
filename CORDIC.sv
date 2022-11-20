@@ -15,11 +15,11 @@
 // Then perform the CORDIC rotation
 
 // Gain = 1.65, so rotating (1/1.65, 0) yields cosine and sine 
-// To remove the gain, multiply by 2^OW / Gain and then shift right OW bits
+// Eliminate the gain by multiplying by 32'h_9B74EF47 then shifting 32 bits right
 
 module CORDIC #(parameter   PW=12, // Phase width
-                            IW=6, // Input width (ie. i_xval, i_yval)
-                            OW=7, // Output width (word grows by 1 bit due to gain)
+                            IW=31, // Input width (ie. i_xval, i_yval)
+                            OW=32, // Output width (word grows by 1 bit due to gain)
                             NSTAGES=11
                 )
     (input logic clk, enable,
