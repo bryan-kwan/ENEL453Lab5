@@ -1,9 +1,5 @@
 import math
 
-
-def tohex(val, nbits):
-    return (val + (1 << nbits)) % (1 << nbits)
-
 CLK_FREQ=50000000
 SINE_VALUE_BITS = 7
 #PWM_DAC_MAX_COUNT = 2**SINE_VALUE_BITS
@@ -28,16 +24,10 @@ with open("dist2freq_step_rom.txt", "w") as f:
     for i in range(size):
         if(i>MIN_DIST and i<MAX_DIST): # Inside range
             frequency=LOW_FREQ+i*DIST_TO_FREQ_SCALE # Target frequency of final pwm signal
-            f.write("{:08X}\n".format(tohex(round(
-                2**(PHASE_WIDTH-PHASE_INTEGER_WIDTH)*frequency/BASE_FREQ
-                ),PHASE_WIDTH)))
+            f.write("{:08X}\n".format(round(2**(PHASE_WIDTH-PHASE_INTEGER_WIDTH)*frequency/BASE_FREQ)))
         elif (i<=MIN_DIST): # Too close to sensor; stay at LOW_FREQ
             frequency=LOW_FREQ
-            f.write("{:08X}\n".format(tohex(round(
-                2**(PHASE_WIDTH-PHASE_INTEGER_WIDTH)*frequency/BASE_FREQ
-                ),PHASE_WIDTH)))
+            f.write("{:08X}\n".format(round(2**(PHASE_WIDTH-PHASE_INTEGER_WIDTH)*frequency/BASE_FREQ)))
         elif (i>=MAX_DIST): # Too far from sensor; set to BASE_FREQ
             frequency=CARRIER_FREQ
-            f.write("{:08X}\n".format(tohex(round(
-                2**(PHASE_WIDTH-PHASE_INTEGER_WIDTH)*frequency/BASE_FREQ
-                ),PHASE_WIDTH)))
+            f.write("{:08X}\n".format(round(2**(PHASE_WIDTH-PHASE_INTEGER_WIDTH)*frequency/BASE_FREQ)))
