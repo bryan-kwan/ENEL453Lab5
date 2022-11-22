@@ -20,7 +20,7 @@ module CORDIC_tb();
     initial begin
         $display("Start of testbench");
         $display("Testing sine generation, time=%t ps",$time);
-        i_xval=32'h3fffffff; i_yval=0; // Rotating (1,0), o_yval gives the sine function
+        i_xval=31'h3fffffff; i_yval=0; // Rotating (1,0), o_yval gives the sine function
         for(int i = 0; i<(2**PW); i+=1) begin
             $display("Applying phase = %h", i);
             i_phase = i; #((NSTAGES+4)*CLOCK_PERIOD);
