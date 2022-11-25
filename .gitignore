@@ -9,3 +9,4 @@ adc_qsys/*
 output_files/*
 work/*
 *.wlf
+wlf*
