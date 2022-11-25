@@ -11,7 +11,7 @@
 
 module FM_DAC
  #(int                      WIDTH = 13, // Bit width of distance
-                            SINE_WIDTH=8, // Bit width of sine LUT data
+                            SINE_WIDTH=7, // Bit width of sine LUT data
                             PHASE_WIDTH=32, // Bit width of phase
                             PHASE_INTEGER_WIDTH=12, // Number of bits designated to an integer table index
                             COUNT_WIDTH=8
@@ -37,7 +37,17 @@ module FM_DAC
         .enable(enable),
         .phase(phase), // LUT uses the PHASE_INTEGER_WIDTH most significant bits of phase
         .sine(sine_fm));
-        
+    
+    // CORDIC
+    // logic [30:0] i_xval = 31'h3fffffff; // Initial vector for CORDIC rotation
+    // logic [30:0] i_yval = 31'h0;
+    // logic [31:0] o_xval, o_yval;
+    // assign sine_fm = o_yval[31:25];
+    // CORDIC CORDIC_ins(.clk(clk),.enable(enable),
+    //     .i_xval(i_xval),.i_yval(i_yval),
+    //     .i_phase(phase[PHASE_WIDTH-1:PHASE_WIDTH-PHASE_INTEGER_WIDTH]),
+    //     .o_xval(o_xval),.o_yval(o_yval));
+    // ----
     // Uncomment for PWM --------------------------------
     // PWM_DAC #(.width(SINE_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
     //     .duty_cycle(sine_fm),

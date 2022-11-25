@@ -29,15 +29,26 @@ module AM_DAC
     //assign count_value = -1; // Maximum unsigned value
     // --------------------------------
 
-    assign freq_step = 32'h33333333; // 10 MHz
+    assign freq_step = 32'h028F5C29; // 500 kHz
     assign sine_am_out = sine_am;
 
-    // Lower level modules
+    // // Lower level modules
     sine_LUT sine_LUT_ins(.clk(clk),
         .enable(enable), 
         .phase(phase), // LUT uses the PHASE_INTEGER_WIDTH most significant bits of phase
         .sine(sine_value));
 
+    // CORDIC
+    // logic [30:0] i_xval = 31'h3fffffff; // Initial vector for CORDIC rotation
+    // logic [30:0] i_yval = 31'h0;
+    // logic [31:0] o_xval, o_yval;
+    // assign sine_value = o_yval[31:25];
+    // CORDIC CORDIC_ins(.clk(clk),.enable(enable),
+    //     .i_xval(i_xval),.i_yval(i_yval),
+    //     .i_phase(phase[PHASE_WIDTH-1:PHASE_WIDTH-PHASE_INTEGER_WIDTH]),
+    //     .o_xval(o_xval),.o_yval(o_yval));
+    // ----
+    
     // Uncomment for PWM --------------------------------
     // PWM_DAC #(.width(SINE_WIDTH),.COUNT_WIDTH(COUNT_WIDTH)) PWM_DAC_ins(.clk(clk),.reset_n(reset_n),.enable(enable),
     //     .duty_cycle(sine_am),
