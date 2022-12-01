@@ -37,9 +37,12 @@ module top_level
   // assign ARDUINO_IO[0] = sine_am_pwm;
   // assign ARDUINO_IO[1] = sine_fm_pwm;
   assign ARDUINO_IO[1:0] = {(2){pwm_buzzer}};
-  assign ARDUINO_IO[8:2] = sine_am_out[6:0]; // 7 bit sine_am value
-  assign ARDUINO_IO[15:9] = sine_fm_out[6:0]; // 7 bit sine_fm value
+  // assign ARDUINO_IO[8:2] = sine_am_out[6:0]; // 7 bit sine_am value
+  // assign ARDUINO_IO[15:9] = sine_fm_out[6:0]; // 7 bit sine_fm value
   // instantiate lower level modules
+
+  // AM/FM output on ARDUINO[15:9]
+  MUX2TO1 #(.width(7)) MUX_amfm_ins(.in1(sine_am_out[6:0]), .in2(sine_fm_out[6:0]),.s(SW[0]),.mux_out(ARDUINO_IO[15:9]));
 
   AM_DAC AM_DAC_ins(.reset_n(reset_n), .clk(clk), .enable(write_enable), .distance(distance),
     //.sine_pwm_out(sine_am_pwm),
